@@ -1,9 +1,6 @@
 "use strict";
 
 import {
-  boolArrayToString,
-  instanceToString,
-  createInstance,
   getValueFromBoolArray
 } from "./utils.mjs";
 
@@ -34,8 +31,19 @@ function generatePopulation(populationSize, instance) {
 
 function sortPopulation(population) {
   population.sort((a, b) => {
-    return a.value - b.value;
+    return b.value - a.value;
   });
+}
+
+function selectParents(population) {
+  const populationLength = population.length;
+  const r1 = Math.random() * 0.04, r2 = Math.random() * 0.5;
+  const randomIndex1 = Math.floor(r1 * populationLength);
+  const randomIndex2 = Math.floor(r2 * populationLength);
+  return [
+    population[randomIndex1],
+    population[randomIndex2]
+  ];
 }
 
 function crossoverIndividuals(parents, crossoverPercentage, instance) {
@@ -54,17 +62,6 @@ function crossoverIndividuals(parents, crossoverPercentage, instance) {
   return [
     {array: childArray1},
     {array: childArray2}
-  ];
-}
-
-function selectParents(population) {
-  const populationLength = population.length;
-  const r1 = Math.random(), r2 = Math.random();
-  const randomIndex1 = Math.floor(r1 * r1 * populationLength);
-  const randomIndex2 = Math.floor(r2 * r2 * populationLength);
-  return [
-    population[randomIndex1],
-    population[randomIndex2]
   ];
 }
 
@@ -96,10 +93,10 @@ function mutationStep(population, mutationPercentage, instance) {
 }
 
 function geneticAlgorithm(populationSize, generationAmount, crossoverPercentage, mutationPercentage, instance) {
-  let bestArray = null;
-  let bestValue = -Infinity;
   let population = generatePopulation(populationSize, instance);
   sortPopulation(population);
+  let bestArray = population[0].array;
+  let bestValue = -Infinity;
   for (let i = 0; i < generationAmount; i++) {
     population = crossoverStep(population, crossoverPercentage, instance);
     mutationStep(population, mutationPercentage, instance);
@@ -112,9 +109,3 @@ function geneticAlgorithm(populationSize, generationAmount, crossoverPercentage,
   }
   return bestArray;
 }
-
-/* const instance = createInstance(5, 2, 9, 9);
-console.log(instanceToString(instance));
-const array = geneticAlgorithm(100, 100, 0.8, 0.2, instance);
-console.log(boolArrayToString(array, instance));
-console.log("with value " + getValueFromBoolArray(array, instance)); */

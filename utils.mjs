@@ -1,5 +1,7 @@
 "use strict";
 
+import {writeFile} from "fs";
+
 export {
   indexSetToString,
   boolArrayToString,
@@ -11,8 +13,32 @@ export {
   getValueFromFloatArray,
   fromBoolArrayToIndexSet,
   fromIndexSetToBoolArray,
-  loadInstanceFromFile
+  loadInstanceFromFile,
+  writeInstanceToFile
 };
+
+function writeInstanceToFile(instance, filename) {
+  const n = instance.n;
+  const k = instance.k;
+  const w = instance.w;
+  const v = instance.v;
+  const m = instance.m;
+  let string = "" + n + " " + k + "\n";
+  for (let i = 0; i < n; i++) {
+    string += v[i] + " ";
+    for (let j = 0; j < k - 1; j++) {
+      string += w[j][i] + " ";
+    }
+    string += w[k - 1][i] + "\n";
+  }
+  for (let i = 0; i < k - 1; i++) {
+    string += m[i] + " ";
+  }
+  string += m[k - 1];
+  writeFile(filename, string, (error) => {
+    if (error) return console.log(error);
+  });
+}
 
 function loadInstanceFromFile(string) {
   let n = 0;

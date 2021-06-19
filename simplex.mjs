@@ -1,30 +1,8 @@
 "use strict";
 
-import {
-  floatArrayToString,
-  instanceToString,
-  createInstance,
-  getValueFromFloatArray
-} from "./utils.mjs";
-
 export {
   simplex
 };
-
-function tableauToString(tableau, instance) {
-  const n = instance.n;
-  const k = instance.k;
-  const rowNumber = n + k + 1;
-  const columnNumber = n + n + k + 2;
-  let string = "";
-  for (let i = 0; i < rowNumber; i++) {
-    for (let j = 0; j < columnNumber; j++) {
-      string += Math.floor(tableau[i][j] * 100) / 100 + " ";
-    }
-    string += "\n";
-  }
-  return string;
-}
 
 function createTableau(instance) {
   const n = instance.n;
@@ -164,9 +142,3 @@ function simplex(maxIterations, instance) {
   const array = extractSolution(tableau, instance);
   return array;
 }
-
-/* const instance = createInstance(5, 2, 9, 9);
-console.log(instanceToString(instance));
-const array = simplex(100, instance);
-console.log(floatArrayToString(array, instance));
-console.log("with value " + getValueFromFloatArray(array, instance)); */

@@ -1,12 +1,5 @@
 "use strict";
 
-import {
-  indexSetToString,
-  instanceToString,
-  createInstance,
-  getValueFromIndexSet
-} from "./utils.mjs";
-
 export {
   dynamicProgramming
 };
@@ -33,7 +26,7 @@ function loadMatrix(matrix, instance) {
   const w = instance.w;
   const v = instance.v;
   const m = instance.m;
-  for (let j = 0; j < n; j++) {
+  for (let j = 0; j < n; j++) { 2
     for (let i = 0; i <= m[0]; i++) {
       for (let l = 0; l <= m[1]; l++) {
         if (w[0][j] > i || w[1][j] > l) {
@@ -60,6 +53,7 @@ function loadMatrix(matrix, instance) {
     matrix[0] = matrix[1];
     matrix[1] = temp;
   }
+  return matrix[0][m[0]][m[1]].set;
 }
 
 function dynamicProgramming(instance) {
@@ -69,12 +63,6 @@ function dynamicProgramming(instance) {
   }
   const m = instance.m;
   const matrix = createMatrix(instance);
-  loadMatrix(matrix, instance);
-  return matrix[0][m[0]][m[1]].set;
+  const set = loadMatrix(matrix, instance);
+  return set;
 }
-
-/* const instance = createInstance(5, 2, 9, 9);
-console.log(instanceToString(instance));
-const set = dynamicProgramming(instance);
-console.log(indexSetToString(set, instance));
-console.log("with value " + getValueFromIndexSet(set, instance)); */

@@ -1,9 +1,6 @@
 "use strict";
 
 import {
-  boolArrayToString,
-  instanceToString,
-  createInstance,
   getValueFromBoolArray
 } from "./utils.mjs";
 
@@ -92,9 +89,3 @@ function tabuSearch(steps, tabuListMaxLength, instance) {
   }
   return best.array;
 }
-
-/* const instance = createInstance(5, 2, 9, 9);
-console.log(instanceToString(instance));
-const array = tabuSearch(100, 10, instance);
-console.log(boolArrayToString(array, instance));
-console.log("with value " + getValueFromBoolArray(array, instance)); */

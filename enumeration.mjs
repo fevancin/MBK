@@ -1,9 +1,6 @@
 "use strict";
 
 import {
-  boolArrayToString,
-  instanceToString,
-  createInstance,
   getValueFromBoolArray
 } from "./utils.mjs";
 
@@ -42,7 +39,7 @@ function enumeration(instance) {
   let array = createInitialBoolArray(instance);
   for (let i = 0; i < numSolutions; i++) {
     const value = getValueFromBoolArray(array, instance);
-    if (value > bestValue) {
+    if (value >= bestValue) {
       bestArray = array.slice();
       bestValue = value;
     }
@@ -50,9 +47,3 @@ function enumeration(instance) {
   }
   return bestArray;
 }
-
-/* const instance = createInstance(5, 2, 9, 9);
-console.log(instanceToString(instance));
-const array = enumeration(instance);
-console.log(boolArrayToString(array, instance));
-console.log("with value " + getValueFromBoolArray(array, instance)); */
